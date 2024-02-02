@@ -1,0 +1,27 @@
+# Python
+*.pyc
+__pycache__/
+venv/
+*.py[cod]
+
+# Flask
+instance/
+.webassets-cache
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.*
+
+elm-stuff
+node_modules
+static/elm.js
+pictures/*

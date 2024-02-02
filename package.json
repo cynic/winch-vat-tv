@@ -1,0 +1,22 @@
+{
+  "name": "winch-vat-tv",
+  "version": "1.0.0",
+  "description": "Stuff to display on the Winchester Vat television",
+  "scripts": {
+    "dev": "npx concurrently \"npx elm-watch hot\" \"flask run --debug\"",
+    "prod": "elm make src/Main.elm --output=static/elm.js && gunicorn -w 2 -b 127.0.0.1:5000 app:app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cynic/winch-vat-tv.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cynic/winch-vat-tv/issues"
+  },
+  "homepage": "https://github.com/cynic/winch-vat-tv#readme",
+  "dependencies": {
+    "elm": "^0.19.1-6"
+  }
+}
