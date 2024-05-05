@@ -39,10 +39,11 @@ img {
 div#description {
   position: absolute;
   bottom: 0;
-  left: 25%;
-  background-color: rgba(0,0,0,0.5);
+  left: 5%;
+  background-color: rgba(0,0,0,0.4);
+  text-shadow: 3px 3px 3px black;
   color: white;
-  width: 50%;
+  width: 90%;
   text-align: center;
   padding: 10px;
   border-radius: 10px 10px 0 0;
@@ -53,7 +54,9 @@ div#name-and-position {
   position: absolute;
   top: 0;
   left: 25%;
-  background-color: rgba(0,0,0,0.5);
+  /* background-color: rgba(0,0,0,0.5); */
+  /* black outline to make text more readable */
+  text-shadow: 2px 2px 2px black;
   color: white;
   width: 50%;
   text-align: center;

@@ -1,34 +1,35 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (Html, div, img, text)
+import Html exposing (div, img, text)
 import Html.Attributes exposing (src, class, id)
 import Json.Decode exposing (Decoder)
 import Json.Decode as D
-import Task
 import Time
 import Http
 import Platform.Cmd as Cmd
+import List.Extra
 
 
 -- MODEL
 
 
 type alias Model =
-    { pictures : List Picture, class : String }
+    { pictures : List Picture
+    , class : String
+    , descriptionShown : Int
+    }
 
 
 type alias Picture =
-    { picture : String, name : String, position : String, description : String }
+    { picture : String, name : String, position : String, description : List String }
 
 
 initialModel : Model
 initialModel =
-    { pictures = [] , class = "" }
-
+  Model [] "" 0
 
 -- UPDATE
-
 
 type Msg
     = NewPictures (List Picture)
@@ -47,9 +48,15 @@ update msg model =
             ([], _) ->
               ( model, Cmd.none )
             (h::t, 0) ->
-              ( { model | pictures = t ++ [h], class = "fade-in" }, Cmd.none )
-            (_, 19) ->
-              ( { model | class = "fade-out" }, Cmd.none )
+              if model.descriptionShown == List.length h.description - 1 then
+                ( Model (t ++ [h]) "fade-in" 0, Cmd.none )
+              else
+                ( { model | descriptionShown = model.descriptionShown + 1 }, Cmd.none )
+            (h::_, 19) ->
+              if model.descriptionShown == List.length h.description - 1 then
+                ( { model | class = "fade-out" }, Cmd.none )
+              else
+                ( model, Cmd.none ) -- no need to do anything.
             (_, _) ->
               ( { model | class = "" }, Cmd.none )
             
@@ -80,7 +87,7 @@ view model =
                       [ div [ id "name" ] [ text pic.name ]
                       , div [ id "position" ] [ text pic.position ]
                       ]
-                    , div [ id "description" ] [ text pic.description ]
+                    , div [ id "description" ] [ text <| (List.Extra.getAt model.descriptionShown pic.description |> Maybe.withDefault "") ]
                     ]
         ]
     }
@@ -103,7 +110,7 @@ pictureDecoder =
     (D.field "picture" D.string)
     (D.field "name" D.string)
     (D.field "position" D.string)
-    (D.field "description" D.string)
+    (D.field "description" (D.list D.string))
 
 fetchPictures : Cmd Msg
 fetchPictures =

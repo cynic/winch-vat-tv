@@ -5,7 +5,7 @@ In the `pictures` folder, place identically-named `.txt` and `.jpg`/`.png`/`.jpe
 The `.txt` file contains the following lines:
 1. Name
 2. Position
-3. Description
+3. Description (can be multiple lines; MUST NOT end in a blank line!)
 
 The pictures in that folder are matched to the files & served.  Reload the page if the `.txt` files change.
 

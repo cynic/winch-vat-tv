@@ -1,14 +1,18 @@
 import os
 import json
 from flask import Flask, send_file
+from flask_cors import CORS,cross_origin
 
 app = Flask(__name__)
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app, resources={r"/": {"origins": "*"}})
 
 @app.route('/')
 def serve_html():
-  return app.send_static_file('index.html')
+    return app.send_static_file('index.html')
 
 @app.route('/pictures')
+@cross_origin(origin='*')
 def serve_pictures():
   pictures_folder = 'pictures'  # Replace with the actual path to your pictures folder
   picture_data = []
@@ -23,7 +27,7 @@ def serve_pictures():
         with open(txt_file_path, 'r') as txt_file:
           name = txt_file.readline().strip()
           position = txt_file.readline().strip()
-          description = txt_file.read().strip()
+          description = txt_file.readlines() # can be multiple lines
 
         picture_data.append({
           'position': position,
